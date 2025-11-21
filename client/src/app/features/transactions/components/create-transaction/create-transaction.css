@@ -1,0 +1,16 @@
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.form-field {
+  flex: 1 1 calc(50% - 16px);
+  min-width: 200px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 16px 16px;
+}

@@ -1,0 +1,11 @@
+.mat-elevation-z8 {
+  margin-top: 20px;
+}
+
+.summary-card {
+  margin-top: 20px;
+}
+
+.mat-header-cell, .mat-cell {
+  padding: 0 16px;
+}

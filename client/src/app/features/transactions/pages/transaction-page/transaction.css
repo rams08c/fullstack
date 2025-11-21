@@ -1,0 +1,13 @@
+.transaction-container {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+}
+
+.form-card {
+  flex: 1;
+}
+
+.list-card {
+  flex: 2;
+}
