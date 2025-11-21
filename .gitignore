@@ -1,6 +1,177 @@
-./client/node_modules
-./server/node_modules
-./server/.env
-./server/prisma
-./client/environments/environment.ts
-./client/environments/environment.prod.ts
+# ============================================
+# Node Modules (Client & Server)
+# ============================================
+**/node_modules/
+node_modules/
+
+# ============================================
+# Environment & Configuration Files
+# ============================================
+# Server environment files
+server/.env
+server/.env.local
+server/.env.*.local
+server/.env.development
+server/.env.production
+server/.env.test
+
+# Client environment files
+client/src/environments/environment.ts
+client/src/environments/environment.*.ts
+!client/src/environments/environment.prod.ts.example
+
+# ============================================
+# Build & Distribution Files
+# ============================================
+# Client (Angular) build outputs
+client/dist/
+client/tmp/
+client/out-tsc/
+client/.angular/
+client/bazel-out/
+
+# Server build outputs
+server/dist/
+server/build/
+server/out/
+
+# ============================================
+# Logs & Debugging
+# ============================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+logs/
+*.log.*
+
+# ============================================
+# IDE & Editor Files
+# ============================================
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+
+# IntelliJ / WebStorm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+*.swp
+*.swo
+*~
+
+# ============================================
+# OS-Specific Files
+# ============================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ============================================
+# Testing & Coverage
+# ============================================
+coverage/
+*.lcov
+.nyc_output/
+lib-cov/
+.grunt/
+.lock-wscript/
+
+# ============================================
+# Database & Prisma
+# ============================================
+# Prisma migrations (keep schema.prisma but exclude generated client)
+server/prisma/migrations/
+server/node_modules/.prisma/
+server/node_modules/@prisma/
+
+# SQLite databases (if using for development)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# ============================================
+# Temporary & Cache Files
+# ============================================
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.vuepress/dist/
+
+# ============================================
+# Package Manager Files
+# ============================================
+# Yarn
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# npm
+package-lock.json.backup
+.npm/
+
+# ============================================
+# Sensitive & Security Files
+# ============================================
+# SSL certificates
+*.pem
+*.key
+*.cert
+*.crt
+
+# Secrets
+secrets/
+*.secret
+
+# ============================================
+# Miscellaneous
+# ============================================
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# dotenv environment variable files
+.env.backup
