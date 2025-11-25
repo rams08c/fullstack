@@ -1,11 +1,146 @@
-.mat-elevation-z8 {
-  margin-top: 20px;
+.transaction-list-container {
+  min-height: 400px;
 }
 
-.summary-card {
-  margin-top: 20px;
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 20px;
 }
 
-.mat-header-cell, .mat-cell {
-  padding: 0 16px;
+.loading-container p {
+  color: #666;
+  font-size: 16px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 80px;
+  width: 80px;
+  height: 80px;
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  color: #666;
+  margin: 0 0 8px 0;
+}
+
+.empty-state p {
+  color: #999;
+  margin: 0;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.transaction-table {
+  width: 100%;
+  background: white;
+}
+
+.transaction-row {
+  transition: background-color 0.2s;
+}
+
+.transaction-row:hover {
+  background-color: rgba(102, 126, 234, 0.05);
+}
+
+.title-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title-cell strong {
+  font-size: 14px;
+  color: #333;
+}
+
+.title-cell small {
+  font-size: 12px;
+  color: #666;
+}
+
+.amount {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.amount.income {
+  color: #11998e;
+}
+
+.amount.expense {
+  color: #eb3349;
+}
+
+.amount-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.category-badge.income {
+  background-color: rgba(17, 153, 142, 0.1);
+  color: #11998e;
+}
+
+.category-badge.expense {
+  background-color: rgba(235, 51, 73, 0.1);
+  color: #eb3349;
+}
+
+.date-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #666;
+  font-size: 14px;
+}
+
+.date-cell mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .transaction-table {
+    font-size: 12px;
+  }
+
+  .title-cell strong {
+    font-size: 13px;
+  }
+
+  .amount {
+    font-size: 14px;
+  }
 }

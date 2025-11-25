@@ -1,0 +1,33 @@
+<mat-card class="filters-card">
+    <mat-card-content>
+        <div class="filters-container">
+            <div class="filter-label">
+                <mat-icon>filter_list</mat-icon>
+                <span>Filter by Period:</span>
+            </div>
+            <mat-button-toggle-group [value]="selectedPeriod()" (change)="onPeriodChange($event.value)"
+                class="period-toggle">
+                <mat-button-toggle value="day">
+                    <mat-icon>today</mat-icon>
+                    <span>Day</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="week">
+                    <mat-icon>date_range</mat-icon>
+                    <span>Week</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="month">
+                    <mat-icon>calendar_month</mat-icon>
+                    <span>Month</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="year">
+                    <mat-icon>calendar_today</mat-icon>
+                    <span>Year</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="all">
+                    <mat-icon>all_inclusive</mat-icon>
+                    <span>All</span>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+    </mat-card-content>
+</mat-card>

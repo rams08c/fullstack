@@ -1,0 +1,29 @@
+<div class="pagination-container" *ngIf="totalPages > 1">
+    <button mat-icon-button (click)="onPrevious()" [disabled]="currentPage === 1" class="nav-button">
+        <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <div class="page-numbers">
+        <button *ngIf="pages[0] > 1" mat-button (click)="onPageChange(1)" class="page-button">
+            1
+        </button>
+
+        <span *ngIf="pages[0] > 2" class="ellipsis">...</span>
+
+        <button *ngFor="let page of pages" mat-button (click)="onPageChange(page)" [class.active]="page === currentPage"
+            class="page-button">
+            {{ page }}
+        </button>
+
+        <span *ngIf="pages[pages.length - 1] < totalPages - 1" class="ellipsis">...</span>
+
+        <button *ngIf="pages[pages.length - 1] < totalPages" mat-button (click)="onPageChange(totalPages)"
+            class="page-button">
+            {{ totalPages }}
+        </button>
+    </div>
+
+    <button mat-icon-button (click)="onNext()" [disabled]="currentPage === totalPages" class="nav-button">
+        <mat-icon>chevron_right</mat-icon>
+    </button>
+</div>

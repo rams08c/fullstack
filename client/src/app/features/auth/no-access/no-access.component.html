@@ -1,0 +1,19 @@
+<div class="no-access-container">
+    <mat-card class="no-access-card">
+        <mat-card-header>
+            <mat-icon class="access-denied-icon">lock</mat-icon>
+        </mat-card-header>
+        <mat-card-content>
+            <h1>Access Denied</h1>
+            <p class="message">
+                You don't have permission to access this page.
+                Please log in to continue.
+            </p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="goToLogin()">
+                Go to Login
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

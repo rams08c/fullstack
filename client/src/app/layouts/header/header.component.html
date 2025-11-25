@@ -1,12 +1,24 @@
 <mat-toolbar color="primary">
   <span>Money Manager</span>
   <span class="spacer"></span>
-  <button mat-button routerLink="/register">
+
+  <!-- Show when NOT logged in -->
+  <button mat-button routerLink="/register" *ngIf="!isLoggedIn()">
     <mat-icon>person_add</mat-icon>
     <span>Register</span>
   </button>
-  <button mat-button routerLink="/login">
+  <button mat-button routerLink="/login" *ngIf="!isLoggedIn()">
     <mat-icon>login</mat-icon>
     <span>Login</span>
+  </button>
+
+  <!-- Show when logged in -->
+  <button mat-button routerLink="/transactions" *ngIf="isLoggedIn()">
+    <mat-icon>account_balance_wallet</mat-icon>
+    <span>Transactions</span>
+  </button>
+  <button mat-button (click)="logout()" *ngIf="isLoggedIn()">
+    <mat-icon>logout</mat-icon>
+    <span>Logout</span>
   </button>
 </mat-toolbar>

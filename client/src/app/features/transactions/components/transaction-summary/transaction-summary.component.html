@@ -1,0 +1,41 @@
+<div class="summary-container">
+    <mat-card class="summary-card income-card">
+        <mat-card-content>
+            <div class="summary-header">
+                <mat-icon class="summary-icon">trending_up</mat-icon>
+                <span class="summary-label">Total Income</span>
+            </div>
+            <div class="summary-value">₹{{ summary.totalIncome | number:'1.2-2' }}</div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card expense-card">
+        <mat-card-content>
+            <div class="summary-header">
+                <mat-icon class="summary-icon">trending_down</mat-icon>
+                <span class="summary-label">Total Spending</span>
+            </div>
+            <div class="summary-value">₹{{ summary.totalSpending | number:'1.2-2' }}</div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card balance-card" [ngClass]="{'negative': summary.pendingAmount < 0}">
+        <mat-card-content>
+            <div class="summary-header">
+                <mat-icon class="summary-icon">account_balance_wallet</mat-icon>
+                <span class="summary-label">Balance</span>
+            </div>
+            <div class="summary-value">₹{{ summary.pendingAmount | number:'1.2-2' }}</div>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="summary-card count-card">
+        <mat-card-content>
+            <div class="summary-header">
+                <mat-icon class="summary-icon">receipt_long</mat-icon>
+                <span class="summary-label">Transactions</span>
+            </div>
+            <div class="summary-value">{{ summary.transactionCount }}</div>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -6,9 +6,10 @@ export class CategoryService {
         const category = await prisma.category.create({
             data: {
                 name: dto.name,
+                categoryType: dto.categoryType || 'EXPENSE', // Default to EXPENSE if not provided
             },
         });
-        return category;
+        return category as unknown as Category;
     }
 
     async getCategoryById(id: string): Promise<Category | null> {
@@ -19,14 +20,14 @@ export class CategoryService {
         const category = await prisma.category.findUnique({
             where: { id: categoryId },
         });
-        return category;
+        return category as unknown as Category;
     }
 
     async getAllCategories(): Promise<Category[]> {
         const categories = await prisma.category.findMany({
             orderBy: { name: 'asc' },
         });
-        return categories;
+        return categories as unknown as Category[];
     }
 
     async updateCategory(id: string, dto: UpdateCategoryDto): Promise<Category> {
@@ -47,7 +48,7 @@ export class CategoryService {
                 ...dto,
             },
         });
-        return category;
+        return category as unknown as Category;
     }
 
     async deleteCategory(id: string): Promise<Category> {
@@ -65,6 +66,6 @@ export class CategoryService {
         const category = await prisma.category.delete({
             where: { id: categoryId },
         });
-        return category;
+        return category as unknown as Category;
     }
 }

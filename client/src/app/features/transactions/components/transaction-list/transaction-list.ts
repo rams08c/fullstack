@@ -1,28 +1,52 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TransactionModel } from '../../../../shared/models/transaction.model';
+import { Transaction } from '../../../../core/models/transaction.model';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-transaction-list',
-  imports: [CommonModule, MatTableModule, MatCardModule, MatIconModule, MatButtonModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './transaction-list.html',
   styleUrl: './transaction-list.css',
 })
 export class TransactionList {
-  @Input() transactions: TransactionModel[] = [];
-  @Output() edit = new EventEmitter<TransactionModel>();
+  @Input() transactions: Transaction[] = [];
+  @Input() isLoading: boolean = false;
 
-  displayedColumns: string[] = ['description', 'amount', 'category', 'date', 'actions'];
+  @Output() edit = new EventEmitter<Transaction>();
+  @Output() delete = new EventEmitter<Transaction>();
 
-  editTransaction(transaction: TransactionModel): void {
+  displayedColumns: string[] = ['title', 'amount', 'category', 'date', 'actions'];
+
+  editTransaction(transaction: Transaction): void {
     this.edit.emit(transaction);
   }
 
-  get totalAmount(): number {
-    return this.transactions.reduce((total, transaction) => total + transaction.amount, 0);
+  deleteTransaction(transaction: Transaction): void {
+    this.delete.emit(transaction);
+  }
+
+  getAmountClass(transaction: Transaction): string {
+    return transaction.category?.categoryType === 'INCOME' ? 'income' : 'expense';
+  }
+
+  formatDate(date: Date | string): string {
+    return new Date(date).toLocaleDateString('en-IN', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
   }
 }

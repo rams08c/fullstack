@@ -1,49 +1,137 @@
-import { Injectable, signal, computed } from '@angular/core';
-import { TransactionModel } from '../../shared/models/transaction.model';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import {
+  Transaction,
+  CreateTransactionRequest,
+  UpdateTransactionRequest,
+  TransactionResponse,
+  TransactionsListResponse,
+  TransactionFilters,
+  TransactionSummary,
+  PaginationParams
+} from '../models/transaction.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
-  // Private signal to hold the list of transactions
-  private transactionsSignal = signal<TransactionModel[]>([]);
+  private http = inject(HttpClient);
+  private apiUrl = `${environment.apiUrl}/transactions`;
 
-  // Public read-only signal for components to consume
-  readonly transactions = this.transactionsSignal.asReadonly();
+  /**
+   * Get transactions for a user with filters and pagination
+   */
+  getTransactions(
+    userId: number,
+    filters: TransactionFilters,
+    pagination: PaginationParams
+  ): Observable<TransactionsListResponse> {
+    let params = new HttpParams()
+      .set('skip', pagination.skip.toString())
+      .set('take', pagination.take.toString());
 
-  // Computed signal for total amount
-  readonly totalAmount = computed(() => 
-    this.transactionsSignal().reduce((total, t) => total + Number(t.amount), 0)
-  );
+    // Add date filters based on period
+    if (filters.period !== 'all') {
+      const { dateFrom, dateTo } = this.getDateRange(filters.period);
+      params = params
+        .set('dateFrom', dateFrom.toISOString())
+        .set('dateTo', dateTo.toISOString());
+    }
 
-  constructor() {
-    // Initialize with some dummy data or load from local storage if needed
-    this.loadInitialData();
+    // Add custom date filters if provided
+    if (filters.dateFrom) {
+      params = params.set('dateFrom', filters.dateFrom.toISOString());
+    }
+    if (filters.dateTo) {
+      params = params.set('dateTo', filters.dateTo.toISOString());
+    }
+
+    // Add category filter
+    if (filters.categoryId) {
+      params = params.set('categoryId', filters.categoryId.toString());
+    }
+
+    return this.http.get<TransactionsListResponse>(`${this.apiUrl}/user/${userId}`, { params });
   }
 
-  private loadInitialData() {
-    // Example initial data
-    const initialData: TransactionModel[] = [
-      { id: 1, description: 'Grocery', amount: 50, category: 'Food', date: new Date() },
-      { id: 2, description: 'Salary', amount: 5000, category: 'Income', date: new Date() }
-    ];
-    this.transactionsSignal.set(initialData);
+  /**
+   * Get single transaction by ID
+   */
+  getTransactionById(id: number): Observable<TransactionResponse> {
+    return this.http.get<TransactionResponse>(`${this.apiUrl}/${id}`);
   }
 
-  addTransaction(transaction: TransactionModel) {
-    const newTransaction = { ...transaction, id: Date.now() };
-    this.transactionsSignal.update(transactions => [...transactions, newTransaction]);
+  /**
+   * Create new transaction
+   */
+  createTransaction(data: CreateTransactionRequest): Observable<TransactionResponse> {
+    return this.http.post<TransactionResponse>(this.apiUrl, data);
   }
 
-  updateTransaction(updatedTransaction: TransactionModel) {
-    this.transactionsSignal.update(transactions => 
-      transactions.map(t => t.id === updatedTransaction.id ? updatedTransaction : t)
-    );
+  /**
+   * Update existing transaction
+   */
+  updateTransaction(id: number, data: UpdateTransactionRequest): Observable<TransactionResponse> {
+    return this.http.put<TransactionResponse>(`${this.apiUrl}/${id}`, data);
   }
 
-  deleteTransaction(id: number) {
-    this.transactionsSignal.update(transactions => 
-      transactions.filter(t => t.id !== id)
-    );
+  /**
+   * Delete transaction
+   */
+  deleteTransaction(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  /**
+   * Calculate summary from transactions
+   */
+  calculateSummary(transactions: Transaction[]): TransactionSummary {
+    const totalSpending = transactions
+      .filter(t => t.category?.categoryType !== 'INCOME') // Treat everything not INCOME as EXPENSE
+      .reduce((sum, t) => sum + Number(t.amount), 0);
+
+    const totalIncome = transactions
+      .filter(t => t.category?.categoryType === 'INCOME')
+      .reduce((sum, t) => sum + Number(t.amount), 0);
+
+    const pendingAmount = totalIncome - totalSpending;
+
+    return {
+      totalSpending,
+      totalIncome,
+      pendingAmount,
+      transactionCount: transactions.length
+    };
+  }
+
+  /**
+   * Get date range for period filter
+   */
+  getDateRange(period: 'day' | 'week' | 'month' | 'year'): { dateFrom: Date; dateTo: Date } {
+    const now = new Date();
+    const dateTo = new Date(now);
+    dateTo.setHours(23, 59, 59, 999);
+
+    let dateFrom = new Date(now);
+    dateFrom.setHours(0, 0, 0, 0);
+
+    switch (period) {
+      case 'day':
+        // Already set to start of today
+        break;
+      case 'week':
+        dateFrom.setDate(now.getDate() - 7);
+        break;
+      case 'month':
+        dateFrom.setMonth(now.getMonth() - 1);
+        break;
+      case 'year':
+        dateFrom.setFullYear(now.getFullYear() - 1);
+        break;
+    }
+
+    return { dateFrom, dateTo };
   }
 }

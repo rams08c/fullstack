@@ -41,9 +41,15 @@ model Profile {
   user         User     @relation(fields: [userId], references: [id])
 }
 
+enum CategoryType {
+  INCOME
+  EXPENSE
+}
+
 model Category {
   id           Int           @id @default(autoincrement())
   name         String        @unique
+  categoryType CategoryType  @default(EXPENSE)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   transactions Transaction[]
