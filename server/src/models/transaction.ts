@@ -1,4 +1,5 @@
-import { IsDateString, IsDecimal, IsInt, IsOptional, IsString } from 'class-validator';
+import { IsDateString, IsDecimal, IsEnum, IsInt, IsOptional, IsString } from 'class-validator';
+import { CategoryType } from './category';
 import type { Category } from './category';
 import type { User } from './user';
 
@@ -8,6 +9,7 @@ export interface Transaction {
     description?: string | null;
     amount: number; // Decimal in Prisma is mapped to number or string in JS/TS, usually string to preserve precision, but for DTOs we might use number or string. Prisma Client returns Decimal.
     date: Date;
+    categoryType: CategoryType;
     createdAt: Date;
     updatedAt: Date;
     userId: number;
@@ -29,6 +31,10 @@ export class CreateTransactionDto {
 
     @IsDateString()
     date!: string;
+
+    @IsEnum(CategoryType)
+    @IsOptional()
+    categoryType?: CategoryType;
 
     @IsInt()
     userId!: number;
@@ -53,6 +59,10 @@ export class UpdateTransactionDto {
     @IsOptional()
     @IsDateString()
     date?: string;
+
+    @IsOptional()
+    @IsEnum(CategoryType)
+    categoryType?: CategoryType;
 
     @IsOptional()
     @IsInt()

@@ -1,0 +1,85 @@
+<div class="income-container">
+    <mat-card class="income-card">
+        <mat-card-header>
+            <mat-card-title>
+                <mat-icon class="title-icon">trending_up</mat-icon>
+                Record Income
+            </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="incomeForm" class="income-form">
+                <!-- Title Field -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Title</mat-label>
+                    <input matInput type="text" formControlName="title" placeholder="e.g., Salary, Freelance" required>
+                    <mat-icon matSuffix>title</mat-icon>
+                    <mat-error *ngIf="incomeForm.get('title')?.hasError('required')">
+                        Title is required
+                    </mat-error>
+                    <mat-error *ngIf="incomeForm.get('title')?.hasError('minlength')">
+                        Title must be at least 3 characters
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Amount Field -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Amount</mat-label>
+                    <input matInput type="number" formControlName="amount" placeholder="0.00" required step="0.01">
+                    <span matPrefix>₹&nbsp;</span>
+                    <mat-icon matSuffix>payments</mat-icon>
+                    <mat-error *ngIf="incomeForm.get('amount')?.hasError('required')">
+                        Amount is required
+                    </mat-error>
+                    <mat-error *ngIf="incomeForm.get('amount')?.hasError('min')">
+                        Amount must be greater than 0
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Category Field -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Income Category</mat-label>
+                    <mat-select formControlName="categoryId" placeholder="Select income category" required>
+                        <mat-option *ngFor="let category of categories()" [value]="category.id">
+                            <mat-icon>trending_up</mat-icon>
+                            {{ category.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix>category</mat-icon>
+                    <mat-error *ngIf="incomeForm.get('categoryId')?.hasError('required')">
+                        Category is required
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Date Field -->
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="incomeForm.get('date')?.hasError('required')">
+                        Date is required
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Loading Spinner -->
+                <div *ngIf="isLoading()" class="loading-spinner">
+                    <mat-spinner diameter="40"></mat-spinner>
+                    <p>Loading categories...</p>
+                </div>
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+            <button mat-button type="button" (click)="onReset()" [disabled]="isLoading() || isSubmitting()">
+                <mat-icon>refresh</mat-icon>
+                Reset
+            </button>
+            <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
+                [disabled]="!incomeForm.valid || isLoading() || isSubmitting()">
+                <mat-icon>add</mat-icon>
+                Record Income
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

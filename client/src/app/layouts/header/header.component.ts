@@ -26,8 +26,8 @@ export class HeaderComponent {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
 
-  // Track if user is logged in reactively
-  isLoggedIn = computed(() => this.authService.isLoggedIn());
+  // Use signal-based auth state directly for reactive updates
+  isLoggedIn = this.authService.isAuthenticated;
 
   /**
    * Logout user with production-ready implementation

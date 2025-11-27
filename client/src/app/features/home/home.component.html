@@ -1,0 +1,38 @@
+<div class="home-container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <mat-icon class="hero-icon">account_balance_wallet</mat-icon>
+                Money Manager
+            </h1>
+            <p class="hero-subtitle">
+                Take control of your finances with our simple and powerful expense tracking tool
+            </p>
+            <div class="hero-actions">
+                <button mat-raised-button color="primary" routerLink="/register" class="action-button">
+                    <mat-icon>person_add</mat-icon>
+                    Get Started
+                </button>
+                <button mat-raised-button routerLink="/login" class="action-button">
+                    <mat-icon>login</mat-icon>
+                    Login
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <h2 class="section-title">Why Choose Money Manager?</h2>
+        <div class="features-grid">
+            <mat-card *ngFor="let feature of features" class="feature-card">
+                <mat-card-content>
+                    <mat-icon class="feature-icon">{{ feature.icon }}</mat-icon>
+                    <h3 class="feature-title">{{ feature.title }}</h3>
+                    <p class="feature-description">{{ feature.description }}</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </section>
+</div>

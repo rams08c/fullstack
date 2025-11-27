@@ -96,6 +96,7 @@ export class TransactionFormDialogComponent implements OnInit {
                     description: formValue.description,
                     amount: formValue.amount.toString(),
                     date: new Date(formValue.date).toISOString(),
+                    categoryType: 'EXPENSE',
                     categoryId: formValue.categoryId
                 };
                 this.dialogRef.close({ action: 'update', data: updateData, id: this.data.transaction.id });
@@ -105,6 +106,7 @@ export class TransactionFormDialogComponent implements OnInit {
                     description: formValue.description,
                     amount: formValue.amount.toString(),
                     date: new Date(formValue.date).toISOString(),
+                    categoryType: 'EXPENSE',
                     userId: this.data.userId,
                     categoryId: formValue.categoryId
                 };

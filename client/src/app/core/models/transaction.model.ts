@@ -4,6 +4,7 @@ export interface Transaction {
     description?: string | null;
     amount: number;
     date: Date | string;
+    categoryType: 'INCOME' | 'EXPENSE';
     createdAt?: Date | string;
     updatedAt?: Date | string;
     userId: number;
@@ -23,6 +24,7 @@ export interface CreateTransactionRequest {
     description?: string;
     amount: string; // String for decimal precision
     date: string; // ISO date string
+    categoryType?: 'INCOME' | 'EXPENSE';
     userId: number;
     categoryId: number;
 }
@@ -32,6 +34,7 @@ export interface UpdateTransactionRequest {
     description?: string;
     amount?: string;
     date?: string;
+    categoryType?: 'INCOME' | 'EXPENSE';
     categoryId?: number;
 }
 

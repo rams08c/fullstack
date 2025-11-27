@@ -6,8 +6,7 @@ import { guestGuard } from './core/guards/guest.guard';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'transactions',
-        pathMatch: 'full'
+        loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent)
     },
     {
         path: 'login',
@@ -26,6 +25,11 @@ export const routes: Routes = [
     {
         path: 'transactions',
         loadComponent: () => import('./features/transactions/pages/transaction-page/transaction').then(m => m.TransactionPageComponent),
+        canActivate: [authGuard]
+    },
+    {
+        path: 'income',
+        loadComponent: () => import('./features/income/income.component').then(m => m.IncomeComponent),
         canActivate: [authGuard]
     }
 ];

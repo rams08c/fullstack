@@ -25,6 +25,7 @@ export class TransactionService {
                 description: dto.description,
                 amount: dto.amount,
                 date: new Date(dto.date),
+                categoryType: dto.categoryType,
                 userId: uId,
                 categoryId: dto.categoryId,
             },
@@ -96,6 +97,7 @@ export class TransactionService {
                 description: dto.description,
                 amount: dto.amount,
                 date: dto.date ? new Date(dto.date) : undefined,
+                categoryType: dto.categoryType,
                 categoryId: dto.categoryId,
             },
         });
